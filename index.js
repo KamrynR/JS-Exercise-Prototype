@@ -40,10 +40,25 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
-
+Person.prototype.eat = function(food) {
+  if (this.stomach.length < 10) {
+    this.stomach.push(food);
+  }
+};
+Person.prototype.poop = function() {
+  return this.stomach = [];
+};
+Person.prototype.toString = function (name, age) {
+  let stringNew = `"${this.name}, ${this.age}"`;
+  return stringNew;
+}
+let James = new Person("James", 21);
+let Mary = new Person("Mary", 50);
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -58,10 +73,25 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
 }
-
+Car.prototype.fill = function (gallons) {
+ this.tank += gallons;
+}
+Car.prototype.drive = function (distance) {
+  this.odometer += distance;
+  this.tank = ((this.tank*this.milesPerGallon) - distance)/this.milesPerGallon;
+  if (this.tank < 0) {
+    this.odometer += 0;
+    this.tank = 0;
+    let x = this.odometer;
+    return "I ran out of fuel at " + x + " miles!";
+  }
+}
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -69,18 +99,25 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
+}
 
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function (favoriteToy) {
+  return `Playing with ${this.favoriteToy}`;
 }
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. When you write 'this' in global scope' it will output the entire code.
+  2. 'this' is bound to all words that come before a dot.
+  3. 'this' can be used to create contstuctor functions allowing the function to make many objects or strings.
+  4. 'this' can be used to override constructor objects by taking form of .call or .apply.
 */
 
 
